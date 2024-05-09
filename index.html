@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="flex flex-col justify-center mt-48 h-3/5 w-2/3  mx-auto gap-8">
+        <h2 class="font-bold text-4xl">Tic Tac Toe</h2>
+        <div id="board" class="grid grid-rows-3 grid-flow-col gap-10 ">
+            <div class="cell one flex justify-center items-center text-6xl border-2  border-black w-24 h-24 "
+                onclick="playBox(0,0)"></div>
+            <div class="cell two flex justify-center items-center text-6xl border-2 border-black w-24 h-24"
+                onclick="playBox(0,1)"></div>
+            <div class="cell three flex justify-center items-center text-6xl border-2 border-black w-24 h-24"
+                onclick="playBox(0,2)"></div>
+            <div class="cell four flex justify-center items-center text-6xl border-2 border-black w-24 h-24"
+                onclick="playBox(1,0)"></div>
+            <div class="cell five flex justify-center items-center text-6xl border-2 border-black w-24 h-24"
+                onclick="playBox(1,1)"></div>
+            <div class="cell six flex justify-center items-center text-6xl border-2 border-black w-24 h-24"
+                onclick="playBox(1,2)"></div>
+            <div class="cell seven flex justify-center items-center text-6xl border-2 border-black w-24 h-24"
+                onclick="playBox(2,0)"></div>
+            <div class="cell eight flex justify-center items-center text-6xl border-2 border-black w-24 h-24"
+                onclick="playBox(2,1)"></div>
+            <div class="cell nine flex justify-center items-center text-6xl border-2 border-black w-24 h-24"
+                onclick="playBox(2,2)"></div>
+        </div>
+    </div>
+    <script>
+        let board = [
+            ['', '', ''],
+            ['', '', ''],
+            ['', '', ''],
+        ];
+
+        let currentPlayer = 'X';
+
+        function playBox(row, col) {
+            if (board[row][col] === '') {
+                board[row][col] = currentPlayer;
+                document.getElementById('board').children[row * 3 + col].innerText = currentPlayer;
+
+                checkWinner();
+
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            }
+
+        }
+        function checkWinner() {
+            for (let i = 0; i < 3; i++) {
+                if (board[i][0] !== '' && board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
+                    alert(`Congratulations! ${board[i][0]} wins`)
+                    resetGame();
+                    return;
+                }
+                if (board[0][i] != '' && board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
+                    alert(`Congratulations! ${board[0][i]} wins`)
+                    resetGame();
+                    return;
+                }
+            }
+
+            if (board[0][0] !== '' && board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
+                alert(`Congratulations! ${board[0][0]} wins`)
+                resetGame();
+                return;
+            }
+
+            if (board[0][2] !== '' && board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
+                alert(`Congratulations! ${board[0][2]} wins`)
+                resetGame();
+                return;
+            }
+            if (!board.flat().includes('')) {
+                alert(`Draw`)
+                resetGame();
+                return;
+            }
+        }
+
+        function resetGame() {
+            board = [
+                ['', '', ''],
+                ['', '', ''],
+                ['', '', ''],
+            ]
+            currentPlayer = 'X';
+            document.querySelectorAll('.cell').forEach(cell => cell.innerText = '');
+        }
+    </script>
+</body>
+
+</html>
